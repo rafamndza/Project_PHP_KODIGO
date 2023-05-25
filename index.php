@@ -1,36 +1,8 @@
+
 <?php
 $valor= '';
 $desde = '';
 $hasta = '';
-//recibimos metros en $valor convertimos a $unidad_hasta
-function convertir_desde_metros ($valor,$unidad_hasta){
-    switch($unidad_hasta){
-        case 'Milimetro':
-            return $valor*11000;
-        break;
-        case 'Centimetro':
-            return $valor*100;
-        break;
-        case 'Decimetro':
-            return $valor*10;
-        break;
-        case 'Metro':
-            return $valor*1;
-        break;
-        case 'Decametro':
-            return $valor/10;
-        break;
-        case 'Hectometro':
-            return $valor/100;
-        break;
-        case 'Kilometro':
-            return $valor/1000;
-        break;
-        default:
-        return 'Unidad de medida invalida';
-        break;
-    }
-}
 
 function convertir_a_metros ($valor,$unidad_desde){
     switch($unidad_desde){
@@ -60,6 +32,35 @@ function convertir_a_metros ($valor,$unidad_desde){
         break;
     }
 }
+function convertir_desde_metros ($valor,$unidad_hasta){
+    switch($unidad_hasta){
+        case 'Milimetro':
+            return $valor*11000;
+        break;
+        case 'Centimetro':
+            return $valor*100;
+        break;
+        case 'Decimetro':
+            return $valor*10;
+        break;
+        case 'Metro':
+            return $valor*1;
+        break;
+        case 'Decametro':
+            return $valor/10;
+        break;
+        case 'Hectometro':
+            return $valor/100;
+        break;
+        case 'Kilometro':
+            return $valor/1000;
+        break;
+        default:
+        return 'Unidad de medida invalida';
+        break;
+    }
+}
+
 if(isset($_POST['convertir'])){
  //Obtension de valores
  $valor = $_POST['valor'];
@@ -68,7 +69,7 @@ if(isset($_POST['convertir'])){
 
  $conversionDesde = convertir_a_metros($valor,$desde);
  $conversionHasta = convertir_desde_metros($conversionDesde,$hasta);
- $resultado = number_format($conversionHasta,2);
+ $resultado = $conversionHasta;
 }
 ?>
 
@@ -86,16 +87,16 @@ if(isset($_POST['convertir'])){
 
     <div class="container">
         <form method="POST">
-        <div class="row mt-4">
-            <div class="col-sm-4">
-                <div>
-                    <label for="valor" class="form-label">Valor:</label>
-                    <input type="number" class="form-control" name="valor" >
-                </div>
-            </div>
+            <div class="row mt-4">
                 <div class="col-sm-4">
-                    <label for="from" class="form-label">Desde:</label>
-                    <select class="form-select" name="desde">    
+                    <div>
+                        <label for="valor" class="form-label">Valor:</label>
+                        <input type="number" class="form-control" name="valor" >
+                    </div>
+                </div>
+                    <div class="col-sm-4">
+                        <label for="desde" class="form-label">Desde:</label>
+                        <select class="form-select" name="desde">    
                             <option value="">--Selecciona un valor--</option>                       
                             <option value="Milimetro">Milímetro</option>
                             <option value="Centimetro">Centímetro</option>
@@ -104,12 +105,10 @@ if(isset($_POST['convertir'])){
                             <option value="Decámetro">Decámetro</option>
                             <option value="Hectómetro">Hectómetro</option>
                             <option value="Kilómetro">Kilómetro</option>
-                    </select>
-                
-                
+                        </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for="from" class="form-label">Hasta:</label>
+                    <label for="hasta" class="form-label">Hasta:</label>
                     <select class="form-select" name="hasta">
                         <option value="">--Selecciona un valor--</option>  
                         <option value="Milimetro">Milímetro</option>
@@ -121,23 +120,23 @@ if(isset($_POST['convertir'])){
                         <option value="Kilómetro">Kilómetro</option>
                     </select>              
                 </div>
-           
-        </div>  
-
-        <div class="row mt-4">
-            <div class="col-sm-6">
-                <button name="convertir" type="submit" class="btn btn-primary w-100 py-4">Convertir</button>
-            </div> 
-            <div class="col-sm-6">
-                <div class="mb-3">
-                    <label for="resultado" class="form-label">Resultado:</label>
-                    <input name="resultado" type="text" class="form-control">                
+            </div>  
+            <div class="row mt-4">
+                <div class="col-sm-6">
+                    <button name="convertir" type="submit" class="btn btn-primary w-100 py-4">Convertir</button>
+                </div> 
+                <div class="col-sm-6">
+                    <div class="mb-3">
+                        <label for="resultado" class="form-label">Resultado:</label>
+                        <input name="resultado" type="text" class="form-control" value="
+                        <?php
+                        if(isset($resultado))echo $resultado;
+                        ?>
+                        ">                
+                    </div>
                 </div>
-            </div>
-        </div> 
-
-         </form>     
+            </div> 
+        </form>     
     </div>
-    
   </body>
 </html>
